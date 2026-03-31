@@ -18,7 +18,12 @@ export interface Video {
   videoUrl: string;
 }
 
-const SAMPLE_VIDEO = "https://www.w3schools.com/html/mov_bbb.mp4";
+// Default local sample video. Copy your file
+// `Data Structures Explained for Beginners - How I Wish I was Taught - Sajjaad Khader (360p, h264).mp4`
+// into the `public/videos` folder (keeping the same filename), and it will
+// be used for all demo videos.
+const SAMPLE_VIDEO =
+  "/videos/Data Structures Explained for Beginners - How I Wish I was Taught - Sajjaad Khader (360p, h264).mp4";
 
 const defaultVideos: Video[] = [
   {
@@ -58,7 +63,8 @@ const defaultVideos: Video[] = [
     description:
       "Dive into the stack data structure. Learn about LIFO ordering, push/pop operations, and real-world applications like undo systems and expression evaluation.",
     category: "Stacks",
-    videoUrl: SAMPLE_VIDEO,
+    videoUrl:
+      "https://www.youtube.com/watch?v=I37kGX-nZEI&list=PLBlnK6fEyqRgWh1emltdMOz8O2m5X3YYn",
   },
   {
     id: "queues-explained",
@@ -71,7 +77,7 @@ const defaultVideos: Video[] = [
     description:
       "Everything about queues: FIFO ordering, circular queues, double-ended queues (deques), and priority queues. Great for interview preparation!",
     category: "Queues",
-    videoUrl: SAMPLE_VIDEO,
+    videoUrl: "/videos/videoplayback (2).mp4",
   },
   {
     id: "binary-trees",
@@ -84,7 +90,7 @@ const defaultVideos: Video[] = [
     description:
       "Master binary trees: in-order, pre-order, post-order traversals, binary search trees, and AVL tree balancing. Animated examples included.",
     category: "Trees",
-    videoUrl: SAMPLE_VIDEO,
+    videoUrl: "/videos/videoplayback (3).mp4",
   },
   {
     id: "hash-tables",
@@ -97,14 +103,40 @@ const defaultVideos: Video[] = [
     description:
       "Learn how hash tables achieve constant-time lookups, handle collisions with chaining and open addressing, and when to use them over other structures.",
     category: "Hash Tables",
-    videoUrl: SAMPLE_VIDEO,
+    videoUrl: "/videos/videoplayback (4).mp4",
+  },
+  {
+    id: "music-lofi",
+    title: "Gata only",
+    channel: "YouTube Clone Music",
+    views: "2.3M views",
+    uploadedAt: "6 months ago",
+    duration: "1:00:00",
+    thumbnail: thumbQueues,
+    description:
+      "Chill lo-fi beats to help you focus while working through data structures and algorithms.",
+    category: "Music",
+    videoUrl: "/videos/videoplayback (6).mp4",
+  },
+  {
+    id: "podcast-deep-dive",
+    title: "Wakurugenzi minisodes",
+    channel: "YouTube Clone Podcasts",
+    views: "540K views",
+    uploadedAt: "3 months ago",
+    duration: "45:12",
+    thumbnail: thumbLinkedList,
+    description:
+      "Long-form podcast episode discussing system design, scalability, and real-world engineering stories.",
+    category: "Podcasts",
+    videoUrl: "/videos/videoplayback (7).mp4",
   },
 ];
 
 // Mutable array so uploaded videos persist during the session
 export const videos: Video[] = [...defaultVideos];
 
-export const categories = ["All", "Arrays", "Linked Lists", "Stacks", "Queues", "Trees", "Hash Tables"];
+export const categories = ["All", "Arrays", "Linked Lists", "Stacks", "Queues", "Trees", "Hash Tables", "Music", "Podcasts"];
 
 let idCounter = 0;
 

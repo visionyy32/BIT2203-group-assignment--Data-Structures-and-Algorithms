@@ -3,6 +3,30 @@ import type { Video } from "@/data/videos";
 import { ThumbsUp, ThumbsDown, Share2, Download, MoreHorizontal, Flag, ListPlus } from "lucide-react";
 import { toast } from "sonner";
 
+const isYouTubeUrl = (url: string) => url.includes("youtube.com") || url.includes("youtu.be");
+
+const getYouTubeEmbedUrl = (url: string) => {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes("youtube.com")) {
+      const v = u.searchParams.get("v");
+      const list = u.searchParams.get("list");
+      if (!v) return url;
+      let embed = `https://www.youtube.com/embed/${v}`;
+      if (list) embed += `?list=${list}`;
+      return embed;
+    }
+    if (u.hostname.includes("youtu.be")) {
+      const v = u.pathname.slice(1);
+      if (!v) return url;
+      return `https://www.youtube.com/embed/${v}`;
+    }
+    return url;
+  } catch {
+    return url;
+  }
+};
+
 const VideoPlayer = ({ video }: { video: Video }) => {
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
@@ -11,6 +35,7 @@ const VideoPlayer = ({ video }: { video: Video }) => {
   const [showMore, setShowMore] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const isYouTube = isYouTubeUrl(video.videoUrl);
 
   const handleLike = () => {
     if (liked) {
@@ -63,14 +88,24 @@ const VideoPlayer = ({ video }: { video: Video }) => {
     <div>
       {/* Player */}
       <div className="aspect-video bg-foreground/5 rounded-xl overflow-hidden">
-        <video
-          ref={videoRef}
-          src={video.videoUrl}
-          controls
-          autoPlay
-          className="w-full h-full bg-black"
-          poster={video.thumbnail}
-        />
+        {isYouTube ? (
+          <iframe
+            src={getYouTubeEmbedUrl(video.videoUrl)}
+            title={video.title}
+            className="w-full h-full bg-black"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            src={video.videoUrl}
+            controls
+            autoPlay
+            className="w-full h-full bg-black"
+            poster={video.thumbnail}
+          />
+        )}
       </div>
 
       {/* Title */}
@@ -129,13 +164,15 @@ const VideoPlayer = ({ video }: { video: Video }) => {
             <Share2 className="w-4 h-4" /> Share
           </button>
 
-          {/* Download */}
-          <button
-            onClick={handleDownload}
-            className="flex items-center gap-1 px-4 py-2 text-sm font-medium bg-secondary rounded-full hover:bg-yt-hover transition-colors hidden sm:flex"
-          >
-            <Download className="w-4 h-4" /> Download
-          </button>
+          {/* Download (disabled for YouTube sources) */}
+          {!isYouTube && (
+            <button
+              onClick={handleDownload}
+              className="flex items-center gap-1 px-4 py-2 text-sm font-medium bg-secondary rounded-full hover:bg-yt-hover transition-colors hidden sm:flex"
+            >
+              <Download className="w-4 h-4" /> Download
+            </button>
+          )}
 
           {/* More menu */}
           <div className="relative">
