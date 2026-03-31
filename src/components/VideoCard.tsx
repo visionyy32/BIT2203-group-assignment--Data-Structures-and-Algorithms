@@ -1,0 +1,36 @@
+import { Link } from "react-router-dom";
+import type { Video } from "@/data/videos";
+
+const VideoCard = ({ video }: { video: Video }) => {
+  return (
+    <Link to={`/watch/${video.id}`} className="group">
+      <div className="relative aspect-video rounded-xl overflow-hidden bg-muted">
+        <img
+          src={video.thumbnail}
+          alt={video.title}
+          loading="lazy"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+        />
+        <span className="absolute bottom-2 right-2 bg-foreground/80 text-primary-foreground text-xs font-medium px-1.5 py-0.5 rounded">
+          {video.duration}
+        </span>
+      </div>
+      <div className="flex gap-3 mt-3">
+        <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold flex-shrink-0">
+          {video.channel.charAt(0)}
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-sm font-medium leading-snug line-clamp-2 text-foreground">
+            {video.title}
+          </h3>
+          <p className="text-xs text-muted-foreground mt-1">{video.channel}</p>
+          <p className="text-xs text-muted-foreground">
+            {video.views} · {video.uploadedAt}
+          </p>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+export default VideoCard;
