@@ -8,9 +8,7 @@ export default {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      screens: { "2xl": "1400px" },
     },
     extend: {
       fontFamily: {
@@ -63,10 +61,13 @@ export default {
         yt: {
           red: "hsl(var(--yt-red))",
           dark: "hsl(var(--yt-dark))",
-          "light-gray": "hsl(var(--yt-light-gray))",
+          surface: "hsl(var(--yt-surface))",
+          hover: "hsl(var(--yt-hover))",
           chip: "hsl(var(--yt-chip))",
           "chip-active": "hsl(var(--yt-chip-active))",
           "chip-active-fg": "hsl(var(--yt-chip-active-fg))",
+          "sidebar-bg": "hsl(var(--yt-sidebar))",
+          "sidebar-hover": "hsl(var(--yt-sidebar-hover))",
         },
       },
       borderRadius: {

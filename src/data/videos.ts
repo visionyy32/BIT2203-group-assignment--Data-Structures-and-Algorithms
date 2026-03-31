@@ -15,13 +15,12 @@ export interface Video {
   thumbnail: string;
   description: string;
   category: string;
-  // We'll use a public domain sample video for playback
   videoUrl: string;
 }
 
 const SAMPLE_VIDEO = "https://www.w3schools.com/html/mov_bbb.mp4";
 
-export const videos: Video[] = [
+const defaultVideos: Video[] = [
   {
     id: "arrays-101",
     title: "Arrays Explained — The Most Fundamental Data Structure",
@@ -102,4 +101,34 @@ export const videos: Video[] = [
   },
 ];
 
+// Mutable array so uploaded videos persist during the session
+export const videos: Video[] = [...defaultVideos];
+
 export const categories = ["All", "Arrays", "Linked Lists", "Stacks", "Queues", "Trees", "Hash Tables"];
+
+let idCounter = 0;
+
+export function addUserVideo(params: {
+  title: string;
+  description: string;
+  category: string;
+  channel: string;
+  videoUrl: string;
+  thumbnail: string;
+}): Video {
+  idCounter++;
+  const newVideo: Video = {
+    id: `user-video-${idCounter}-${Date.now()}`,
+    title: params.title,
+    channel: params.channel,
+    views: "0 views",
+    uploadedAt: "Just now",
+    duration: "—",
+    thumbnail: params.thumbnail,
+    description: params.description,
+    category: params.category,
+    videoUrl: params.videoUrl,
+  };
+  videos.unshift(newVideo);
+  return newVideo;
+}

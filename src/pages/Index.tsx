@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import Header from "@/components/Header";
+import AppSidebar from "@/components/AppSidebar";
 import CategoryChips from "@/components/CategoryChips";
 import VideoGrid from "@/components/VideoGrid";
 import { videos } from "@/data/videos";
@@ -30,8 +31,13 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <CategoryChips active={category} onChange={setCategory} />
-      <VideoGrid videos={filtered} />
+      <div className="flex">
+        <AppSidebar />
+        <main className="flex-1 min-w-0">
+          <CategoryChips active={category} onChange={setCategory} />
+          <VideoGrid videos={filtered} />
+        </main>
+      </div>
     </div>
   );
 };
